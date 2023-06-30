@@ -1,14 +1,13 @@
-// import { authOptions } from '@/lib/auth';
 import { Icons } from '@/shared';
+import { authOptions } from '@/shared/lib/auth/auth';
 import { buttonVariants } from '@/shared/ui/Button/config';
-// import { getServerSession } from 'next-auth';
+import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-// import { Icons } from './Icons';
 // import { UserAccountNav } from './UserAccountNav';
 // import SearchBar from './SearchBar';
 
 export const Navbar = async () => {
-  // const { user } = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
   return (
     <div className="fixed top-0 inset-x-0 h-fit bg-zinc-100 border-b border-zinc-300 z-[10] py-2">
@@ -25,13 +24,14 @@ export const Navbar = async () => {
         {/* <SearchBar /> */}
 
         {/* actions */}
-        {/* {user ? (
-          <UserAccountNav user={user} />
-        ) : ( */}
-        <Link href="/sign-in" className={buttonVariants({})}>
-          Sign In
-        </Link>
-        {/* )} */}
+        {session?.user ? (
+          <p>youre logged in</p>
+        ) : (
+          // <UserAccountNav user={user} />
+          <Link href="/sign-in" className={buttonVariants({})}>
+            Sign In
+          </Link>
+        )}
       </div>
     </div>
   );
