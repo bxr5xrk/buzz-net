@@ -1,3 +1,4 @@
 import { useOnClickOutside } from './useOnClickOutside';
+import { useToast } from './useToast';
 
-export { useOnClickOutside };
+export { useToast, useOnClickOutside };
