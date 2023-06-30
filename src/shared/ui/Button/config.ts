@@ -1,3 +1,6 @@
+import { cl } from '@/shared/lib';
+import { Size, Theme } from './types';
+
 const SIZE_OPTIONS = {
   default: 'h-10 py-2 px-4',
   sm: 'h-9 px-2 rounded-md',
@@ -18,5 +21,23 @@ const THEME_OPTIONS = {
 
 const DEFAULT_SIZE = 'default';
 const DEFAULT_THEME = 'default';
+
+interface buttonVariantsProps {
+  size?: Size;
+  theme?: Theme;
+  className?: string;
+}
+
+export const buttonVariants = ({
+  size = DEFAULT_SIZE,
+  theme = DEFAULT_THEME,
+  className,
+}: buttonVariantsProps) =>
+  cl(
+    SIZE_OPTIONS[size],
+    THEME_OPTIONS[theme],
+    'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900',
+    className
+  );
 
 export { SIZE_OPTIONS, THEME_OPTIONS, DEFAULT_SIZE, DEFAULT_THEME };
