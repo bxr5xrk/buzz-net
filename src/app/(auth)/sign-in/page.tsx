@@ -3,7 +3,7 @@ import { buttonVariants } from '@/shared/ui/Button/config';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 
-export const SignInPage = () => {
+const SignInPage = () => {
   return (
     <div className="absolute inset-0">
       <div className="h-full max-w-2xl mx-auto flex flex-col items-center justify-center gap-20">
@@ -23,3 +23,5 @@ export const SignInPage = () => {
     </div>
   );
 };
+
+export default SignInPage;
