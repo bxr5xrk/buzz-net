@@ -1,2 +1,4 @@
 import { cl } from './cl/cl';
-export { cl };
+import { nanoid } from './nanoid/nanoid';
+
+export { cl, nanoid };
