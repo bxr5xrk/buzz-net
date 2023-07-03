@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/shared';
+import { useCustomToasts } from '@/shared/lib/hooks/useCustomToast';
 import { toast } from '@/shared/lib/hooks/useToast';
 import { Input } from '@/shared/ui/Input';
 import { CreateSubredditPayload } from '@/shared/validators';
@@ -8,7 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-1
+
 export default function CreateCommunity() {
   const router = useRouter();
   const [communityName, setCommunityName] = useState<string>('');
