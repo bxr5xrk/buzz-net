@@ -3,6 +3,7 @@ import { cl } from '@/shared/lib';
 import '@/styles/globals.css';
 import { Navbar } from '@/widgets/Navbar';
 import { Inter } from 'next/font/google';
+import { ReactNode } from 'react';
 import { ToasterProvider } from './_providers/ToasterProvider';
 
 export const metadata = {
@@ -14,8 +15,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
+  authModal,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  authModal: ReactNode;
 }) {
   return (
     <html
@@ -32,8 +35,10 @@ export default function RootLayout({
         <div className="container max-w-7xl mx-auto h-full pt-12">
           {children}
         </div>
-
         <ToasterProvider />
+
+        {/* parallel routes */}
+        {authModal}
       </body>
     </html>
   );
