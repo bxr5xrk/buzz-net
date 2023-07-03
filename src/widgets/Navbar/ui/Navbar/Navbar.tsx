@@ -1,14 +1,9 @@
 import { Icons } from '@/shared';
-import { authOptions } from '@/shared/lib/auth/auth';
-import { buttonVariants } from '@/shared/ui/Button/config';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-// import { UserAccountNav } from './UserAccountNav';
+import { Action } from '../Action/Action';
 // import SearchBar from './SearchBar';
 
 export const Navbar = async () => {
-  const session = await getServerSession(authOptions);
-
   return (
     <div className="fixed top-0 inset-x-0 h-fit bg-zinc-100 border-b border-zinc-300 z-[10] py-2">
       <div className="container max-w-7xl h-full mx-auto flex items-center justify-between gap-2">
@@ -23,15 +18,8 @@ export const Navbar = async () => {
         {/* search bar */}
         {/* <SearchBar /> */}
 
-        {/* actions */}
-        {session?.user ? (
-          <p>youre logged in</p>
-        ) : (
-          // <UserAccountNav user={user} />
-          <Link href="/sign-in" className={buttonVariants({})}>
-            Sign In
-          </Link>
-        )}
+        {/* @ts-expect-error Server Component */}
+        <Action />
       </div>
     </div>
   );
