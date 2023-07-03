@@ -10,7 +10,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
-export const SignInForm = ({ className, ...props }: UserAuthFormProps) => {
+export function AuthUsingGoogle({ className, ...props }: UserAuthFormProps) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -30,7 +30,6 @@ export const SignInForm = ({ className, ...props }: UserAuthFormProps) => {
     }
   };
 
-
   return (
     <div className={cl('flex justify-center', className)} {...props}>
       <Button
@@ -46,4 +45,4 @@ export const SignInForm = ({ className, ...props }: UserAuthFormProps) => {
       </Button>
     </div>
   );
-};
+}
