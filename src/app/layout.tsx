@@ -5,6 +5,7 @@ import { Navbar } from '@/widgets/Navbar';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
 import { ToasterProvider } from './_providers/ToasterProvider';
+import { FetchProvider } from './_providers/ToasterProvider/ui/FetchProvider';
 
 export const metadata = {
   title: APP_NAME,
@@ -29,16 +30,18 @@ export default function RootLayout({
       lang="en"
     >
       <body className="min-h-screen pt-12 bg-slate-50 antialiased">
-        {/* @ts-expect-error Server Component */}
-        <Navbar />
+        <FetchProvider>
+          {/* @ts-expect-error Server Component */}
+          <Navbar />
 
-        <div className="container max-w-7xl mx-auto h-full pt-12">
-          {children}
-        </div>
-        <ToasterProvider />
+          <div className="container max-w-7xl mx-auto h-full pt-12">
+            {children}
+          </div>
+          <ToasterProvider />
 
-        {/* parallel routes */}
-        {authModal}
+          {/* parallel routes */}
+          {authModal}
+        </FetchProvider>
       </body>
     </html>
   );

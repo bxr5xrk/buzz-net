@@ -3,20 +3,21 @@
 import { Button } from '@/shared';
 import { toast } from '@/shared/lib/hooks/useToast';
 import { Input } from '@/shared/ui/Input';
+import { CreateSubredditPayload } from '@/shared/validators';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-
+1
 export default function CreateCommunity() {
   const router = useRouter();
-  const [input, setInput] = useState<string>('');
+  const [communityName, setCommunityName] = useState<string>('');
   const { loginToast } = useCustomToasts();
 
   const { mutate: createCommunity, isLoading } = useMutation({
     mutationFn: async () => {
       const payload: CreateSubredditPayload = {
-        name: input,
+        name: communityName,
       };
 
       const { data } = await axios.post('/api/subreddit', payload);
@@ -75,8 +76,8 @@ export default function CreateCommunity() {
               r/
             </p>
             <Input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              value={communityName}
+              onChange={(e) => setCommunityName(e.target.value)}
               className="pl-6"
             />
           </div>
@@ -92,7 +93,7 @@ export default function CreateCommunity() {
           </Button>
           <Button
             isLoading={isLoading}
-            disabled={input.length === 0}
+            disabled={communityName.length === 0}
             onClick={() => createCommunity()}
           >
             Create Community
