@@ -1,5 +1,3 @@
-// import { CommunityInfo } from '@/entities/Community';
-// import { CommunityInfo } from '@/entities/Community/ui/CommunityInfo';
 import { CommunityInfo } from '@/entities/Community/ui/CommunityInfo/CommunityInfo';
 import { APP_NAME } from '@/shared/const/appName';
 import type { Metadata } from 'next';
@@ -25,9 +23,6 @@ const Layout = async ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-x-4 py-6">
           <ul className="flex flex-col col-span-2 space-y-6">{children}</ul>
 
-          {/* info sidebar */}
-          {/* @1ts-expect-error Server Component */}
-          {/* <CommunityInfo slug={slug} /> */}
           {/* @ts-expect-error Server Component */}
           <CommunityInfo slug={slug} />
         </div>
