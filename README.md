@@ -1,1 +1,4 @@
 # Buzz-Net
+
+- Eslint
+- Prettier
