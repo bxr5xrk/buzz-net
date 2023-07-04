@@ -1,8 +1,6 @@
-import { useCommunity } from '@/entities/Community/model/service/communityService';
+import { useCommunity } from '@/entities/Community/model/service/dbService';
 import { CreatePost } from '@/entities/Post';
-// import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/shared/const';
 import { getAuthSession } from '@/shared/lib/auth/auth';
-// import { db } from '@/shared/lib/db/db';
 import { notFound } from 'next/navigation';
 
 interface SubredditPageProps {
@@ -17,24 +15,6 @@ export default async function SubredditPage({ params }: SubredditPageProps) {
   const session = await getAuthSession();
 
   const community = await useCommunity(slug);
-
-  // const subreddit = await db.subreddit.findFirst({
-  //   where: { name: slug },
-  //   include: {
-  //     posts: {
-  //       include: {
-  //         author: true,
-  //         votes: true,
-  //         comments: true,
-  //         subreddit: true,
-  //       },
-  //       orderBy: {
-  //         createdAt: 'desc',
-  //       },
-  //       take: INFINITE_SCROLL_PAGINATION_RESULTS,
-  //     },
-  //   },
-  // });
 
   if (!community) return notFound();
 
