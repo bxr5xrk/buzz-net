@@ -4,7 +4,7 @@ import {
   useCommunity,
   useCommunityMemberCount,
   useIsUserSubscribed,
-} from '../../model/service/communityService';
+} from '../../model/service/dbService';
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { buttonVariants } from '@/shared/ui/Button';
 import Link from 'next/link';
@@ -16,6 +16,7 @@ interface CommunityInfoProps {
 
 export async function CommunityInfo({ slug }: CommunityInfoProps) {
   const session = await getAuthSession();
+
   const community = await useCommunity(slug);
 
   const memberCount = await useCommunityMemberCount(slug);
@@ -48,6 +49,7 @@ export async function CommunityInfo({ slug }: CommunityInfoProps) {
             <div className="text-gray-900">{memberCount}</div>
           </dd>
         </div>
+
         {community.creatorId === session?.user?.id ? (
           <div className="flex justify-between gap-x-4 py-3">
             <dt className="text-gray-500">You created this community</dt>
@@ -62,15 +64,17 @@ export async function CommunityInfo({ slug }: CommunityInfoProps) {
           />
         ) : null}
 
-        <Link
-          className={buttonVariants({
-            theme: 'outline',
-            className: 'w-full mb-6',
-          })}
-          href={`r/${slug}/submit`}
-        >
-          Create Post
-        </Link>
+        {isSubscribed ? (
+          <Link
+            className={buttonVariants({
+              theme: 'outline',
+              className: 'w-full mb-6',
+            })}
+            href={`r/${slug}/submit`}
+          >
+            Create Post
+          </Link>
+        ) : null}
       </dl>
     </div>
   );

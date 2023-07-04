@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/Button';
 import {
   useSubscribeCommunity,
   useUnsubscribeCommunity,
-} from '../../model/service/communityService';
+} from '../../model/service/subscribeService';
 
 interface SubscribeLeaveToggleProps {
   isSubscribed: boolean;
@@ -22,6 +22,7 @@ export const SubscribeOrLeaveCommunity = ({
       subredditId,
       subredditName,
     });
+
   const { mutate: onUnsubscribe, isLoading: isLoadingUnsubscribe } =
     useUnsubscribeCommunity({
       subredditId,
@@ -42,7 +43,7 @@ export const SubscribeOrLeaveCommunity = ({
       isLoading={isLoadingSubscribe}
       onClick={() => onSubscribe()}
     >
-      Join to post
+      Join to community
     </Button>
   );
 };

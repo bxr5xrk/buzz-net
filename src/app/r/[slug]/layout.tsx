@@ -1,9 +1,12 @@
-import { CommunityInfo } from '@/entities/Community';
+// import { CommunityInfo } from '@/entities/Community';
+// import { CommunityInfo } from '@/entities/Community/ui/CommunityInfo';
+import { CommunityInfo } from '@/entities/Community/ui/CommunityInfo/CommunityInfo';
+import { APP_NAME } from '@/shared/const/appName';
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Breadit',
+  title: APP_NAME,
   description: 'A Reddit clone built with Next.js and TypeScript.',
 };
 
@@ -23,6 +26,8 @@ const Layout = async ({
           <ul className="flex flex-col col-span-2 space-y-6">{children}</ul>
 
           {/* info sidebar */}
+          {/* @1ts-expect-error Server Component */}
+          {/* <CommunityInfo slug={slug} /> */}
           {/* @ts-expect-error Server Component */}
           <CommunityInfo slug={slug} />
         </div>
