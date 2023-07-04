@@ -1,3 +1,5 @@
+import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/shared/const';
+import { db } from '@/shared/lib/db/db';
 import { useLoginToast } from '@/shared/lib/hooks/useLoginToast';
 import { toast } from '@/shared/lib/hooks/useToast';
 import { CreateSubredditPayload } from '@/shared/validators';
@@ -52,3 +54,31 @@ export const useCreateCommunity = (communityName: string) => {
     },
   });
 };
+
+export const useCommunity = (slug: string) =>
+  db.subreddit.findFirst({
+    where: { name: slug },
+    include: {
+      posts: {
+        include: {
+          author: true,
+          votes: true,
+          comments: true,
+          subreddit: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        take: INFINITE_SCROLL_PAGINATION_RESULTS,
+      },
+    },
+  });
+
+export const useCommunityMemberCount = (slug: string) =>
+  db.subscription.count({
+    where: {
+      subreddit: {
+        name: slug,
+      },
+    },
+  });

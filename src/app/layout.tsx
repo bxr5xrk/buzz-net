@@ -3,7 +3,7 @@ import { cl } from '@/shared/lib';
 import './_styles/globals.css';
 import { Navbar } from '@/widgets/Navbar';
 import { Inter } from 'next/font/google';
-import { ReactNode } from 'react';
+// import { ReactNode } from 'react';
 import { FetchProvider, ToasterProvider } from './_providers';
 
 export const metadata = {
