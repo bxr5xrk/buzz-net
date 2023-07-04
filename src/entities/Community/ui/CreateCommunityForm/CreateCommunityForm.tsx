@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
 import { useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
-import { useCreateCommunity } from '../../model/servises/communityService';
+import { useCreateCommunity } from '../../model/service/communityService';
 
 export function CreateCommunityForm() {
   const [communityName, setCommunityName] = useState('');

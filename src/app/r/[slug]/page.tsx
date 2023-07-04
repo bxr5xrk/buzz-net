@@ -1,4 +1,4 @@
-import { useCommunity } from '@/entities/Community/model/servises/communityService';
+import { useCommunity } from '@/entities/Community/model/service/communityService';
 import { CreatePost } from '@/entities/Post';
 // import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/shared/const';
 import { getAuthSession } from '@/shared/lib/auth/auth';

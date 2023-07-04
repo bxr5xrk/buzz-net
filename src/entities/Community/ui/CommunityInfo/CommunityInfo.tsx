@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import {
   useCommunity,
   useCommunityMemberCount,
-} from '../../model/servises/communityService';
+} from '../../model/service/communityService';
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { buttonVariants } from '@/shared/ui/Button';
 import Link from 'next/link';
