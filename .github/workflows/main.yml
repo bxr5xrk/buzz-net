@@ -18,6 +18,8 @@ jobs:
           fetch-depth: 0
       - name: Install Dependencies
         run: yarn
+    outputs:
+      dependencies-path: ${{ runner.workspace }}
 
   build:
     runs-on: ubuntu-latest
@@ -34,6 +36,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Restore Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ needs.install-dependencies.outputs.dependencies-path }}
+          key: dependencies-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: Build Production
         run: yarn build
 
@@ -45,6 +52,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Restore Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ needs.install-dependencies.outputs.dependencies-path }}
+          key: dependencies-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: Lint Check
         run: yarn lint:check
 
@@ -56,6 +68,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Restore Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ needs.install-dependencies.outputs.dependencies-path }}
+          key: dependencies-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: Format Check
         run: yarn format:check
 
@@ -67,5 +84,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Restore Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ needs.install-dependencies.outputs.dependencies-path }}
+          key: dependencies-${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: Deploy to Production
         run: echo "Deploying to production..."
