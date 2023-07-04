@@ -8,14 +8,14 @@ import {
 
 interface SubscribeLeaveToggleProps {
   isSubscribed: boolean;
-  subredditId: string;
-  subredditName: string;
+  communityId: string;
+  communityName: string;
 }
 
 export const SubscribeOrLeaveCommunity = ({
   isSubscribed,
-  subredditId,
-  subredditName,
+  communityId: subredditId,
+  communityName: subredditName,
 }: SubscribeLeaveToggleProps) => {
   const { mutate: onSubscribe, isLoading: isLoadingSubscribe } =
     useSubscribeCommunity({

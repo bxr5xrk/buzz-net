@@ -3,8 +3,8 @@ import { cl } from '@/shared/lib';
 import './_styles/globals.css';
 import { Navbar } from '@/widgets/Navbar';
 import { Inter } from 'next/font/google';
-// import { ReactNode } from 'react';
 import { FetchProvider, ToasterProvider } from './_providers';
+import { ReactNode } from 'react';
 
 export const metadata = {
   title: APP_NAME,

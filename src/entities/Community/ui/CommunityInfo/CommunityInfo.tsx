@@ -3,10 +3,12 @@ import { format } from 'date-fns';
 import {
   useCommunity,
   useCommunityMemberCount,
+  useIsUserSubscribed,
 } from '../../model/service/communityService';
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { buttonVariants } from '@/shared/ui/Button';
 import Link from 'next/link';
+import { SubscribeOrLeaveCommunity } from '../SubscribeOrLeaveCommunity/SubscribeOrLeaveCommunity';
 
 interface CommunityInfoProps {
   slug: string;
@@ -17,6 +19,12 @@ export async function CommunityInfo({ slug }: CommunityInfoProps) {
   const community = await useCommunity(slug);
 
   const memberCount = await useCommunityMemberCount(slug);
+
+  const user = await useIsUserSubscribed({ slug, id: session?.user.id });
+
+  const subscription = !session?.user ? undefined : user;
+
+  const isSubscribed = !!subscription;
 
   if (!community) return notFound();
 
@@ -46,13 +54,14 @@ export async function CommunityInfo({ slug }: CommunityInfoProps) {
           </div>
         ) : null}
 
-        {/* {subreddit.creatorId !== session?.user?.id ? (
-        <SubscribeLeaveToggle
-          isSubscribed={isSubscribed}
-          subredditId={subreddit.id}
-          subredditName={subreddit.name}
-        />
-      ) : null} */}
+        {community.creatorId !== session?.user?.id ? (
+          <SubscribeOrLeaveCommunity
+            isSubscribed={isSubscribed}
+            communityId={community.id}
+            communityName={community.name}
+          />
+        ) : null}
+
         <Link
           className={buttonVariants({
             theme: 'outline',

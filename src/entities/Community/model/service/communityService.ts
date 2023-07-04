@@ -2,7 +2,10 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/shared/const';
 import { db } from '@/shared/lib/db/db';
 import { useLoginToast } from '@/shared/lib/hooks/useLoginToast';
 import { toast } from '@/shared/lib/hooks/useToast';
-import { CreateSubredditPayload, SubscribeToSubredditPayload } from '@/shared/validators';
+import {
+  CreateSubredditPayload,
+  SubscribeToSubredditPayload,
+} from '@/shared/validators';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -168,3 +171,21 @@ export const useUnsubscribeCommunity = ({
     },
   });
 };
+
+export const useIsUserSubscribed = ({
+  slug,
+  id,
+}: {
+  slug: string;
+  id?: string;
+}) =>
+  db.subscription.findFirst({
+    where: {
+      subreddit: {
+        name: slug,
+      },
+      user: {
+        id,
+      },
+    },
+  });
