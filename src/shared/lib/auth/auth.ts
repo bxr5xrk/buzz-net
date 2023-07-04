@@ -7,16 +7,16 @@ import { nanoid } from '../nanoid/nanoid';
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt'
   },
   pages: {
-    signIn: '/sign-in',
+    signIn: '/sign-in'
   },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+    })
   ],
   callbacks: {
     async session({ token, session }) {
@@ -34,8 +34,8 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
         where: {
-          email: token.email,
-        },
+          email: token.email
+        }
       });
 
       if (!dbUser) {
@@ -46,11 +46,11 @@ export const authOptions: NextAuthOptions = {
       if (!dbUser.username) {
         await db.user.update({
           where: {
-            id: dbUser.id,
+            id: dbUser.id
           },
           data: {
-            username: nanoid(10),
-          },
+            username: nanoid(10)
+          }
         });
       }
 
@@ -59,13 +59,13 @@ export const authOptions: NextAuthOptions = {
         name: dbUser.name,
         email: dbUser.email,
         picture: dbUser.image,
-        username: dbUser.username,
+        username: dbUser.username
       };
     },
     redirect() {
       return '/';
-    },
-  },
+    }
+  }
 };
 
 export const getAuthSession = () => getServerSession(authOptions);

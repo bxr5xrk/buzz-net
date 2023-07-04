@@ -1,11 +1,12 @@
 import { cl } from '@/shared/lib';
-import { Size, Theme } from './types';
+import { Size, Theme } from '../types/types';
 
 const SIZE_OPTIONS = {
   default: 'h-10 py-2 px-4',
   sm: 'h-9 px-2 rounded-md',
   xs: 'h-8 px-1.5 rounded-sm',
   lg: 'h-11 px-8 rounded-md',
+  clear: ''
 };
 
 const THEME_OPTIONS = {
@@ -16,7 +17,7 @@ const THEME_OPTIONS = {
   subtle: 'hover:bg-zinc-200 bg-zinc-100 text-zinc-900',
   ghost:
     'bg-transparent hover:bg-zinc-100 text-zinc-800 data-[state=open]:bg-transparent data-[state=open]:bg-transparent',
-  link: 'bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 dark:text-slate-100 hover:bg-transparent dark:hover:bg-transparent',
+  link: 'bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 dark:text-slate-100 hover:bg-transparent dark:hover:bg-transparent'
 };
 
 const DEFAULT_SIZE = 'default';
@@ -31,7 +32,7 @@ interface buttonVariantsProps {
 export const buttonVariants = ({
   size = DEFAULT_SIZE,
   theme = DEFAULT_THEME,
-  className,
+  className
 }: buttonVariantsProps) =>
   cl(
     SIZE_OPTIONS[size],

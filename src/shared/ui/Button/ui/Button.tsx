@@ -1,11 +1,7 @@
 import { ButtonHTMLAttributes, forwardRef, ReactNode } from 'react';
-import Spinner from '../Spinner/Spinner';
-import {
-  buttonVariants,
-  DEFAULT_SIZE,
-  DEFAULT_THEME,
-} from './config';
-import { Size, Theme } from './types';
+import Spinner from '../../Spinner/Spinner';
+import { buttonVariants, DEFAULT_SIZE, DEFAULT_THEME } from '../config/config';
+import { Size, Theme } from '../types/types';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
