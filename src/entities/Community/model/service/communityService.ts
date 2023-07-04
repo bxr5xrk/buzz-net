@@ -12,7 +12,7 @@ export const useCreateCommunity = (communityName: string) => {
   return useMutation({
     mutationFn: async () => {
       const payload: CreateSubredditPayload = {
-        name: communityName,
+        name: communityName
       };
 
       const { data } = await axios.post('/api/subreddit', payload);
@@ -24,7 +24,7 @@ export const useCreateCommunity = (communityName: string) => {
           return toast({
             title: 'Subreddit already exists.',
             description: 'Please choose a different name.',
-            variant: 'destructive',
+            variant: 'destructive'
           });
         }
 
@@ -32,7 +32,7 @@ export const useCreateCommunity = (communityName: string) => {
           return toast({
             title: 'Invalid subreddit name.',
             description: 'Please choose a name between 3 and 21 letters.',
-            variant: 'destructive',
+            variant: 'destructive'
           });
         }
 
@@ -44,11 +44,11 @@ export const useCreateCommunity = (communityName: string) => {
       toast({
         title: 'There was an error.',
         description: 'Could not create subreddit.',
-        variant: 'destructive',
+        variant: 'destructive'
       });
     },
     onSuccess: (data) => {
       router.push(`/r/${data}`);
-    },
+    }
   });
 };

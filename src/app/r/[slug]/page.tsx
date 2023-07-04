@@ -20,7 +20,7 @@ export default async function SubredditPage({ params }: SubredditPageProps) {
 
   return (
     <>
-      <h1 className="font-bold text-3xl md:text-4xl h-14">
+      <h1 className="h-14 text-3xl font-bold md:text-4xl">
         r/{community.name}
       </h1>
       <CreatePost session={session} />

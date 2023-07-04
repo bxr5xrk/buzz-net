@@ -8,14 +8,14 @@ import { ReactNode } from 'react';
 
 export const metadata = {
   title: APP_NAME,
-  description: 'A Reddit clone built with Next.js and TypeScript.',
+  description: 'A Reddit clone built with Next.js and TypeScript.'
 };
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
-  authModal,
+  authModal
 }: {
   children: ReactNode;
   authModal: ReactNode;
@@ -23,17 +23,17 @@ export default function RootLayout({
   return (
     <html
       className={cl(
-        'bg-white text-slate-900 antialiased light',
+        'light bg-white text-slate-900 antialiased',
         inter.className
       )}
       lang="en"
     >
-      <body className="min-h-screen pt-12 bg-slate-50 antialiased">
+      <body className="min-h-screen bg-slate-50 pt-12 antialiased">
         <FetchProvider>
           {/* @ts-expect-error Server Component */}
           <Navbar />
 
-          <div className="container max-w-7xl mx-auto h-full pt-12">
+          <div className="container mx-auto h-full max-w-7xl pt-12">
             {children}
           </div>
           <ToasterProvider />
