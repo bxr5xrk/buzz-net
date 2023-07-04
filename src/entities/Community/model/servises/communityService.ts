@@ -1,4 +1,4 @@
-import { useCustomToasts } from '@/shared/lib/hooks/useCustomToast';
+import { useLoginToast } from '@/shared/lib/hooks/useLoginToast';
 import { toast } from '@/shared/lib/hooks/useToast';
 import { CreateSubredditPayload } from '@/shared/validators';
 import { useMutation } from '@tanstack/react-query';
@@ -6,7 +6,7 @@ import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
 export const useCreateCommunity = (communityName: string) => {
-  const { loginToast } = useCustomToasts();
+  const loginToast = useLoginToast();
   const router = useRouter();
 
   return useMutation({
