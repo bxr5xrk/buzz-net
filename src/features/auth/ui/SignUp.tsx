@@ -1,7 +1,7 @@
 import { Icons } from '@/shared';
 import { APP_NAME } from '@/shared/const/appName';
 import Link from 'next/link';
-import { AuthUsingGoogle } from './AuthUsingGoogle';
+import { AuthUsingGoogle } from './providers/AuthUsingGoogle';
 
 export function SignUp() {
   return (
@@ -10,8 +10,8 @@ export function SignUp() {
         <Icons.logo className="mx-auto h-6 w-6" />
         <h1 className="text-2xl font-semibold tracking-tight">Sign Up</h1>
         <p className="text-sm max-w-xs mx-auto">
-          By continuing, you are setting up a {APP_NAME} account and agree to our
-          User Agreement and Privacy Policy.
+          By continuing, you are setting up a {APP_NAME} account and agree to
+          our User Agreement and Privacy Policy.
         </p>
       </div>
       <AuthUsingGoogle />

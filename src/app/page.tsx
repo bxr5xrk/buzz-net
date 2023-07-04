@@ -1,6 +1,6 @@
 import { APP_NAME } from '@/shared/const/appName';
 // import { getAuthSession } from '@/shared/lib/auth/auth';
-import { buttonVariants } from '@/shared/ui/Button/config/config';
+import { buttonVariants } from '@/shared/ui/Button';
 import { HomeIcon } from 'lucide-react';
 import Link from 'next/link';
 

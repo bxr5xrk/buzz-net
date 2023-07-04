@@ -1,9 +1,9 @@
 import { Icons } from '@/shared';
 import { APP_NAME } from '@/shared/const/appName';
 import Link from 'next/link';
-import { AuthUsingGoogle } from './AuthUsingGoogle';
+import { AuthUsingGoogle } from './providers/AuthUsingGoogle';
 
-export function SignIn () {
+export function SignIn() {
   return (
     <div className="container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[400px]">
       <div className="flex flex-col space-y-2 text-center">
@@ -28,4 +28,4 @@ export function SignIn () {
       </p>
     </div>
   );
-};
+}

@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@/shared';
 import { useCustomToasts } from '@/shared/lib/hooks/useCustomToast';
 import { toast } from '@/shared/lib/hooks/useToast';
+import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
 import { CreateSubredditPayload } from '@/shared/validators';
 import { useMutation } from '@tanstack/react-query';

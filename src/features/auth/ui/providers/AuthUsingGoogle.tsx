@@ -1,33 +1,19 @@
 'use client';
 
-import { Button, Icons } from '@/shared';
+import { Icons } from '@/shared';
 import { cl } from '@/shared/lib';
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
-import { useToast } from '@/shared/lib/hooks';
+import { Button } from '@/shared/ui/Button';
+import { useAuth } from '../../model/services/authByGoogle/authByGoogle';
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
 }
 
 export function AuthUsingGoogle({ className, ...props }: UserAuthFormProps) {
-  const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { mutateAsync: onSignIn, isLoading } = useAuth();
 
   const loginWithGoogle = async () => {
-    setIsLoading(true);
-
-    try {
-      await signIn('google');
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'There was an error logging in with Google',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    await onSignIn();
   };
 
   return (

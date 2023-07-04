@@ -1,6 +1,5 @@
 import { SignIn } from '@/features/auth';
-import { CloseModal } from '@/shared/ui/CloseModal';
-import { CloseBackground } from '@/shared/ui/CloseModal/ui/CloseBackground';
+import { CloseModal, CloseBackground } from '@/shared/ui/CloseModal';
 
 export default function SignInModal() {
   return (
