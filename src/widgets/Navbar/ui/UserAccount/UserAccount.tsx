@@ -8,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/shared/ui/Dropdown';
 import { UserAvatar } from '@/features/UserAvatar';
 
@@ -55,7 +55,7 @@ export function UserAccount({ user }: UserAccountProps) {
           onSelect={(event) => {
             event.preventDefault();
             signOut({
-              callbackUrl: `${window.location.origin}/sign-in`,
+              callbackUrl: `${window.location.origin}/sign-in`
             });
           }}
         >

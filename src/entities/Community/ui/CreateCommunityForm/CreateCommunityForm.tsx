@@ -26,21 +26,21 @@ export function CreateCommunityForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="relative bg-white w-full h-fit p-4 rounded-lg space-y-6"
+      className="relative h-fit w-full space-y-6 rounded-lg bg-white p-4"
     >
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Create a Community</h1>
       </div>
 
-      <hr className="bg-red-500 h-px" />
+      <hr className="h-px bg-red-500" />
 
       <div>
         <p className="text-lg font-medium">Name</p>
-        <p className="text-xs pb-2">
+        <p className="pb-2 text-xs">
           Community names including capitalization cannot be changed.
         </p>
         <div className="relative">
-          <p className="absolute text-sm left-0 w-8 inset-y-0 grid place-items-center text-zinc-400">
+          <p className="absolute inset-y-0 left-0 grid w-8 place-items-center text-sm text-zinc-400">
             r/
           </p>
           <Input

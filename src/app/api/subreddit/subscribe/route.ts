@@ -18,13 +18,13 @@ export async function POST(req: Request) {
     const subscriptionExists = await db.subscription.findFirst({
       where: {
         subredditId,
-        userId: session.user.id,
-      },
+        userId: session.user.id
+      }
     });
 
     if (subscriptionExists) {
       return new Response("You've already subscribed to this subreddit", {
-        status: 400,
+        status: 400
       });
     }
 
@@ -32,8 +32,8 @@ export async function POST(req: Request) {
     await db.subscription.create({
       data: {
         subredditId,
-        userId: session.user.id,
-      },
+        userId: session.user.id
+      }
     });
 
     return new Response(subredditId);

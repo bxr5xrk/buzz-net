@@ -13,7 +13,7 @@ export const useAuth = () => {
       toast({
         title: 'Error',
         description: 'There was an error logging in with Google',
-        variant: 'destructive',
-      }),
+        variant: 'destructive'
+      })
   });
 };

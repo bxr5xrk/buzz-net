@@ -3,7 +3,7 @@
 import { Button } from '@/shared/ui/Button';
 import {
   useSubscribeCommunity,
-  useUnsubscribeCommunity,
+  useUnsubscribeCommunity
 } from '../../model/service/subscribeService';
 
 interface SubscribeLeaveToggleProps {
@@ -15,23 +15,23 @@ interface SubscribeLeaveToggleProps {
 export const SubscribeOrLeaveCommunity = ({
   isSubscribed,
   communityId: subredditId,
-  communityName: subredditName,
+  communityName: subredditName
 }: SubscribeLeaveToggleProps) => {
   const { mutate: onSubscribe, isLoading: isLoadingSubscribe } =
     useSubscribeCommunity({
       subredditId,
-      subredditName,
+      subredditName
     });
 
   const { mutate: onUnsubscribe, isLoading: isLoadingUnsubscribe } =
     useUnsubscribeCommunity({
       subredditId,
-      subredditName,
+      subredditName
     });
 
   return isSubscribed ? (
     <Button
-      className="w-full mt-1 mb-4"
+      className="mb-4 mt-1 w-full"
       isLoading={isLoadingUnsubscribe}
       onClick={() => onUnsubscribe()}
     >
@@ -39,7 +39,7 @@ export const SubscribeOrLeaveCommunity = ({
     </Button>
   ) : (
     <Button
-      className="w-full mt-1 mb-4"
+      className="mb-4 mt-1 w-full"
       isLoading={isLoadingSubscribe}
       onClick={() => onSubscribe()}
     >

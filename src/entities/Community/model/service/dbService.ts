@@ -10,28 +10,28 @@ export const useCommunity = (slug: string) =>
           author: true,
           votes: true,
           comments: true,
-          subreddit: true,
+          subreddit: true
         },
         orderBy: {
-          createdAt: 'desc',
+          createdAt: 'desc'
         },
-        take: INFINITE_SCROLL_PAGINATION_RESULTS,
-      },
-    },
+        take: INFINITE_SCROLL_PAGINATION_RESULTS
+      }
+    }
   });
 
 export const useCommunityMemberCount = (slug: string) =>
   db.subscription.count({
     where: {
       subreddit: {
-        name: slug,
-      },
-    },
+        name: slug
+      }
+    }
   });
 
 export const useIsUserSubscribed = ({
   slug,
-  id,
+  id
 }: {
   slug: string;
   id?: string;
@@ -39,10 +39,10 @@ export const useIsUserSubscribed = ({
   db.subscription.findFirst({
     where: {
       subreddit: {
-        name: slug,
+        name: slug
       },
       user: {
-        id,
-      },
-    },
+        id
+      }
+    }
   });

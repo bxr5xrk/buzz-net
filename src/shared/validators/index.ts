@@ -1,6 +1,6 @@
 import {
   SubscribeToSubredditPayload,
-  CreateSubredditPayload,
+  CreateSubredditPayload
 } from './subreddit';
 
 export type { CreateSubredditPayload, SubscribeToSubredditPayload };

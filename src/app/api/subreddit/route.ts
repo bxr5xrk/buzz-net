@@ -17,8 +17,8 @@ export async function POST(req: Request) {
     // check if subreddit already exists
     const subredditExists = await db.subreddit.findFirst({
       where: {
-        name,
-      },
+        name
+      }
     });
 
     if (subredditExists) {
@@ -29,16 +29,16 @@ export async function POST(req: Request) {
     const subreddit = await db.subreddit.create({
       data: {
         name,
-        creatorId: session.user.id,
-      },
+        creatorId: session.user.id
+      }
     });
 
     // creator also has to be subscribed
     await db.subscription.create({
       data: {
         userId: session.user.id,
-        subredditId: subreddit.id,
-      },
+        subredditId: subreddit.id
+      }
     });
 
     return new Response(subreddit.name);

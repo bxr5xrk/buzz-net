@@ -7,7 +7,7 @@ import {
   ToastDescription,
   ToastProvider,
   ToastTitle,
-  ToastViewport,
+  ToastViewport
 } from '@/shared/ui/Toast/Toast';
 
 export function ToasterProvider() {

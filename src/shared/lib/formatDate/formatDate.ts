@@ -17,7 +17,7 @@ const formatDistanceLocale = {
   aboutXYears: '{{count}}y',
   xYears: '{{count}}y',
   overXYears: '{{count}}y',
-  almostXYears: '{{count}}y',
+  almostXYears: '{{count}}y'
 };
 
 function formatDistance(token: string, count: number, options?: any): string {
@@ -44,7 +44,7 @@ export function formatTimeToNow(date: Date): string {
     addSuffix: true,
     locale: {
       ...locale,
-      formatDistance,
-    },
+      formatDistance
+    }
   });
 }

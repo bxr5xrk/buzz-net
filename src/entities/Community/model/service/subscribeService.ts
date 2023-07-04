@@ -8,7 +8,7 @@ import { startTransition } from 'react';
 
 export const useSubscribeCommunity = ({
   subredditId,
-  subredditName,
+  subredditName
 }: {
   subredditId: string;
   subredditName: string;
@@ -19,7 +19,7 @@ export const useSubscribeCommunity = ({
   return useMutation({
     mutationFn: async () => {
       const payload: SubscribeToSubredditPayload = {
-        subredditId,
+        subredditId
       };
 
       const { data } = await axios.post('/api/subreddit/subscribe', payload);
@@ -35,7 +35,7 @@ export const useSubscribeCommunity = ({
       return toast({
         title: 'There was a problem.',
         description: 'Something went wrong. Please try again.',
-        variant: 'destructive',
+        variant: 'destructive'
       });
     },
     onSuccess: () => {
@@ -46,15 +46,15 @@ export const useSubscribeCommunity = ({
       });
       toast({
         title: 'Subscribed!',
-        description: `You are now subscribed to r/${subredditName}`,
+        description: `You are now subscribed to r/${subredditName}`
       });
-    },
+    }
   });
 };
 
 export const useUnsubscribeCommunity = ({
   subredditId,
-  subredditName,
+  subredditName
 }: {
   subredditId: string;
   subredditName: string;
@@ -64,7 +64,7 @@ export const useUnsubscribeCommunity = ({
   return useMutation({
     mutationFn: async () => {
       const payload: SubscribeToSubredditPayload = {
-        subredditId,
+        subredditId
       };
 
       const { data } = await axios.post('/api/subreddit/unsubscribe', payload);
@@ -74,7 +74,7 @@ export const useUnsubscribeCommunity = ({
       toast({
         title: 'Error',
         description: err.response?.data as string,
-        variant: 'destructive',
+        variant: 'destructive'
       });
     },
     onSuccess: () => {
@@ -85,8 +85,8 @@ export const useUnsubscribeCommunity = ({
       });
       toast({
         title: 'Unsubscribed!',
-        description: `You are now unsubscribed from/${subredditName}`,
+        description: `You are now unsubscribed from/${subredditName}`
       });
-    },
+    }
   });
 };
