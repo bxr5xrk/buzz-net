@@ -1,11 +1,10 @@
 import { APP_NAME } from '@/shared/const/appName';
 import { cl } from '@/shared/lib';
-import '@/styles/globals.css';
+import './_styles/globals.css';
 import { Navbar } from '@/widgets/Navbar';
 import { Inter } from 'next/font/google';
 import { ReactNode } from 'react';
-import { ToasterProvider } from './_providers/ToasterProvider';
-import { FetchProvider } from './_providers/ToasterProvider/ui/FetchProvider';
+import { FetchProvider, ToasterProvider } from './_providers';
 
 export const metadata = {
   title: APP_NAME,

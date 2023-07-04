@@ -1,5 +1,5 @@
 import { cl } from '@/shared/lib';
-import { Size, Theme } from './types';
+import { Size, Theme } from '../types/types';
 
 const SIZE_OPTIONS = {
   default: 'h-10 py-2 px-4',

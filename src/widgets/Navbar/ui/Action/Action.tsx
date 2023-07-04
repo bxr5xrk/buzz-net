@@ -1,5 +1,5 @@
 import { authOptions } from '@/shared/lib/auth/auth';
-import { buttonVariants } from '@/shared/ui/Button/config';
+import { buttonVariants } from '@/shared/ui/Button/config/config';
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { UserAccount } from '../UserAccount/UserAccount';

@@ -1,6 +1,6 @@
 import { SignUp } from '@/features/auth';
 import { cl } from '@/shared/lib';
-import { buttonVariants } from '@/shared/ui/Button/config';
+import { buttonVariants } from '@/shared/ui/Button';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 

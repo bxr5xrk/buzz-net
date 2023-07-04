@@ -1,4 +1,4 @@
-import { buttonVariants } from '@/shared/ui/Button/config';
+import { buttonVariants } from '@/shared/ui/Button/config/config';
 import Link from 'next/link';
 import { toast } from './useToast';
 
