@@ -1,6 +1,8 @@
 {
   "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": ["prettier"],
   "rules": {
+    "prettier/prettier": "warn",
     "no-console": ["warn"],
     "no-unused-vars": ["warn"],
     "jsx-quotes": ["error", "prefer-double"],
@@ -8,7 +10,7 @@
     "quotes": ["warn", "single", { "avoidEscape": true }],
     "no-multi-spaces": ["warn", { "ignoreEOLComments": true }],
     "no-trailing-spaces": ["warn", { "skipBlankLines": true }],
-    "no-multiple-empty-lines": ["warn", { "max": 1,"maxEOF": 1 }],
+    "no-multiple-empty-lines": ["warn", { "max": 1, "maxEOF": 1 }],
     "no-whitespace-before-property": "warn"
   }
 }
