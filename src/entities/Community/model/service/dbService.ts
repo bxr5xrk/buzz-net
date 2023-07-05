@@ -2,7 +2,7 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/shared/const';
 import { db } from '@/shared/lib/db/db';
 
 export const useCommunity = (slug: string) =>
-  db.subreddit.findFirst({
+  db.community.findFirst({
     where: { name: slug },
     include: {
       posts: {
@@ -10,7 +10,7 @@ export const useCommunity = (slug: string) =>
           author: true,
           votes: true,
           comments: true,
-          subreddit: true
+          community: true
         },
         orderBy: {
           createdAt: 'desc'
@@ -23,7 +23,7 @@ export const useCommunity = (slug: string) =>
 export const useCommunityMemberCount = (slug: string) =>
   db.subscription.count({
     where: {
-      subreddit: {
+      community: {
         name: slug
       }
     }
@@ -38,7 +38,7 @@ export const useIsUserSubscribed = ({
 }) =>
   db.subscription.findFirst({
     where: {
-      subreddit: {
+      community: {
         name: slug
       },
       user: {

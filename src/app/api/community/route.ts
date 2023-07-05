@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { db } from '@/shared/lib/db/db';
-import { SubredditValidator } from '@/shared/validators/subreddit';
+import { CommunityValidator } from '@/shared/validators/community';
 import { z } from 'zod';
 
 export async function POST(req: Request) {
@@ -12,21 +12,21 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { name } = SubredditValidator.parse(body);
+    const { name } = CommunityValidator.parse(body);
 
-    // check if subreddit already exists
-    const subredditExists = await db.subreddit.findFirst({
+    // check if community already exists
+    const communityExists = await db.community.findFirst({
       where: {
         name
       }
     });
 
-    if (subredditExists) {
-      return new Response('Subreddit already exists', { status: 409 });
+    if (communityExists) {
+      return new Response('Community already exists', { status: 409 });
     }
 
-    // create subreddit and associate it with the user
-    const subreddit = await db.subreddit.create({
+    // create community and associate it with the user
+    const community = await db.community.create({
       data: {
         name,
         creatorId: session.user.id
@@ -37,16 +37,16 @@ export async function POST(req: Request) {
     await db.subscription.create({
       data: {
         userId: session.user.id,
-        subredditId: subreddit.id
+        communityId: community.id
       }
     });
 
-    return new Response(subreddit.name);
+    return new Response(community.name);
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(error.message, { status: 422 });
     }
 
-    return new Response('Could not create subreddit', { status: 500 });
+    return new Response('Could not create community', { status: 500 });
   }
 }

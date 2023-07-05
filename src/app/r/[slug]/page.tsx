@@ -3,13 +3,13 @@ import { CreatePost } from '@/entities/Post';
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { notFound } from 'next/navigation';
 
-interface SubredditPageProps {
+interface CommunityPageProps {
   params: {
     slug: string;
   };
 }
 
-export default async function SubredditPage({ params }: SubredditPageProps) {
+export default async function CommunityPage({ params }: CommunityPageProps) {
   const { slug } = params;
 
   const session = await getAuthSession();
@@ -25,7 +25,7 @@ export default async function SubredditPage({ params }: SubredditPageProps) {
       </h1>
       <CreatePost session={session} />
 
-      {/* <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} /> */}
+      {/* <PostFeed initialPosts={community.posts} communityName={community.name} /> */}
     </>
   );
 }

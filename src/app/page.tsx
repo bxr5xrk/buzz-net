@@ -13,7 +13,7 @@ export default async function Home() {
       <div className="grid grid-cols-1 gap-y-4 py-6 md:grid-cols-3 md:gap-x-4">
         {/* {session ? <CustomFeed /> : <GeneralFeed />} */}
 
-        {/* subreddit info */}
+        {/* community info */}
         <div className="order-first h-fit overflow-hidden rounded-lg border border-gray-200 md:order-last">
           <div className="bg-emerald-100 px-6 py-4">
             <p className="flex items-center gap-1.5 py-3 font-semibold">
@@ -33,7 +33,7 @@ export default async function Home() {
               className={buttonVariants({
                 className: 'mb-6 mt-4 w-full'
               })}
-              href={`/r/create`}
+              href="/r/create"
             >
               Create Community
             </Link>
