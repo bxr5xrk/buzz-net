@@ -7,11 +7,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import EditorJS from '@editorjs/editorjs';
-import { uploadFile } from '../model/service/uploadFile';
-import { usePathname, useRouter } from 'next/navigation';
+import { uploadFile } from '../../model/service/uploadFile';
 import { toast } from '@/shared/lib/hooks/useToast';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import { useCreatePost } from '@/entities/Post/model/service/postService';
+import { FORM_ID } from '../../const';
 
 interface EditorProps {
   communityId: string;
@@ -22,10 +21,8 @@ type FormData = z.infer<typeof PostValidator>;
 export function Editor({ communityId }: EditorProps) {
   const editorRef = useRef<EditorJS>();
   const _titleRef = useRef<HTMLTextAreaElement>(null);
-  const pathname = usePathname();
-  const router = useRouter();
-
   const [isMounted, setIsMounted] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -39,35 +36,7 @@ export function Editor({ communityId }: EditorProps) {
     }
   });
 
-  const { mutate: createPost } = useMutation({
-    mutationFn: async ({
-      title,
-      content,
-      communityId
-    }: PostCreationRequest) => {
-      const payload: PostCreationRequest = { title, content, communityId };
-      const { data } = await axios.post('/api/community/post/create', payload);
-      return data;
-    },
-    onError: () => {
-      return toast({
-        title: 'Something went wrong.',
-        description: 'Your post was not published. Please try again.',
-        variant: 'destructive'
-      });
-    },
-    onSuccess: () => {
-      // turn pathname /r/mycommunity/submit into /r/mycommunity
-      const newPathname = pathname.split('/').slice(0, -1).join('/');
-      router.push(newPathname);
-
-      router.refresh();
-
-      return toast({
-        description: 'Your post has been published.'
-      });
-    }
-  });
+  const { mutate: onCreate } = useCreatePost();
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import('@editorjs/editorjs')).default;
@@ -126,8 +95,7 @@ export function Editor({ communityId }: EditorProps) {
 
   useEffect(() => {
     if (Object.keys(errors).length) {
-      // eslint-disable-next-line no-unused-vars
-      for (const [_, value] of Object.entries(errors)) {
+      for (const [, value] of Object.entries(errors)) {
         value;
         toast({
           title: 'Something went wrong.',
@@ -174,7 +142,7 @@ export function Editor({ communityId }: EditorProps) {
       communityId
     };
 
-    createPost(payload);
+    onCreate(payload);
   }
 
   if (!isMounted) {
@@ -185,11 +153,7 @@ export function Editor({ communityId }: EditorProps) {
 
   return (
     <div className="w-full rounded-lg border border-zinc-200 bg-zinc-50 p-4">
-      <form
-        id="community-post-form"
-        className="w-fit"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <form id={FORM_ID} className="w-fit" onSubmit={handleSubmit(onSubmit)}>
         <div className="prose prose-stone dark:prose-invert">
           <TextareaAutoSize
             ref={(e) => {

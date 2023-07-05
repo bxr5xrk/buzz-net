@@ -3,7 +3,7 @@ import axios from 'axios';
 export const uploadFile = async (file: File) => {
   const formData = new FormData();
   formData.append('image', file);
-  formData.append('key', '86894b25bd9f2d5a7bd0c1b7d429aebd'); // Add your specific key here
+  formData.append('key', process.env.IMGBB_API_KEY ?? '');
 
   const res = await axios.post<{
     data: {
