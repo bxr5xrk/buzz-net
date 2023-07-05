@@ -12,7 +12,7 @@ import { CommunityPost } from '../../model/types/post';
 import { Post } from '../Post/Post';
 
 interface PostFeedProps {
-  communityName: CommunityName;
+  communityName?: CommunityName;
   initialPosts: CommunityPost[];
 }
 
