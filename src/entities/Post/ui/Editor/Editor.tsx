@@ -11,6 +11,7 @@ import { uploadFile } from '../../model/service/uploadFile';
 import { toast } from '@/shared/lib/hooks/useToast';
 import { useCreatePost } from '@/entities/Post/model/service/postService';
 import { FORM_ID } from '../../const';
+import { Loader } from './Loader';
 
 interface EditorProps {
   communityId: string;
@@ -146,7 +147,7 @@ export function Editor({ communityId }: EditorProps) {
   }
 
   if (!isMounted) {
-    return null;
+    return <Loader />;
   }
 
   const { ref: titleRef, ...rest } = register('title');
@@ -165,7 +166,7 @@ export function Editor({ communityId }: EditorProps) {
             placeholder="Title"
             className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
           />
-          <div id="editor" className="min-h-[500px]" />
+          <div id="editor" className="min-h-[400px]" />
           <p className="text-sm text-gray-500">
             Use{' '}
             <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
