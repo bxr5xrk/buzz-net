@@ -2,7 +2,7 @@ import { APP_NAME } from '@/shared/const/appName';
 import { cl } from '@/shared/lib';
 import './_styles/globals.css';
 import { Navbar } from '@/widgets/Navbar';
-import { Inter } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
 import {
   AuthSessionProvider,
   FetchProvider,
@@ -15,7 +15,7 @@ export const metadata = {
   description: 'A Reddit clone built with Next.js and TypeScript.'
 };
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Open_Sans({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
