@@ -1,4 +1,6 @@
 import { CommunityName } from '@/entities/Community/model/types/community';
+import { PostVoteClient } from '@/entities/Vote';
+import { VoteType } from '@/entities/Vote/model/types/vote';
 import { formatTimeToNow } from '@/shared/lib/formatDate/formatDate';
 import { MessageSquare } from 'lucide-react';
 import Link from 'next/link';
@@ -20,6 +22,8 @@ interface PostProps {
   id: PostId;
   content: PostContent;
   commentsAmount: number;
+  votesAmount: number;
+  currentVoteType?: VoteType;
 }
 
 export function Post({
@@ -29,17 +33,20 @@ export function Post({
   createdAt,
   id,
   content,
-  commentsAmount
+  commentsAmount,
+  votesAmount,
+  currentVoteType
 }: PostProps) {
   const postRef = useRef<HTMLParagraphElement>(null);
+
   return (
     <>
       <div className="flex justify-between px-6 py-4">
-        {/* <PostVoteClient
-          postId={post.id}
-          initialVotesAmt={_votesAmt}
-          initialVote={_currentVote?.type}
-        /> */}
+        <PostVoteClient
+          postId={id}
+          initialVotesAmount={votesAmount}
+          initialVote={currentVoteType}
+        />
 
         <div className="w-0 flex-1">
           <div className="mt-1 max-h-40 text-xs text-gray-500">

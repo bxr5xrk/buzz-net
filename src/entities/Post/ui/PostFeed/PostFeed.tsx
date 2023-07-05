@@ -5,6 +5,7 @@ import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/shared/const';
 import { useIntersection } from '@/shared/lib/hooks';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useRef } from 'react';
 import { CommunityPost } from '../../model/types/post';
@@ -63,9 +64,9 @@ export function PostFeed({ communityName, initialPosts }: PostFeedProps) {
           return acc;
         }, 0);
 
-        const currentVote = post.votes.find(
+        const currentVoteType = post.votes.find(
           (vote) => vote.userId === session?.user.id
-        );
+        )?.type;
 
         if (index === posts.length - 1) {
           return (
@@ -78,6 +79,8 @@ export function PostFeed({ communityName, initialPosts }: PostFeedProps) {
                 createdAt={post.createdAt}
                 title={post.title}
                 commentsAmount={post.comments.length}
+                votesAmount={votesAmount}
+                currentVoteType={currentVoteType}
               />
             </li>
           );
@@ -94,10 +97,18 @@ export function PostFeed({ communityName, initialPosts }: PostFeedProps) {
               createdAt={post.createdAt}
               title={post.title}
               commentsAmount={post.comments.length}
+              votesAmount={votesAmount}
+              currentVoteType={currentVoteType}
             />
           </li>
         );
       })}
+
+      {isFetchingNextPage && (
+        <li className="flex justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-zinc-500" />
+        </li>
+      )}
     </ul>
   );
 }
