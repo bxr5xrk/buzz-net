@@ -1,3 +1,5 @@
-import { CreatePost } from './ui/CreatePost/CreatePost';
+import { CreatePostArea } from './ui/CreatePostArea/CreatePostArea';
+import { Editor } from './ui/Editor/Editor';
+import { SubmitCreating } from './ui/SubmitCreating/SubmitCreating';
 
-export { CreatePost };
+export { Editor, SubmitCreating, CreatePostArea };

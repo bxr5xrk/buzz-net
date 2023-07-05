@@ -70,7 +70,7 @@ export async function CommunityInfo({ slug }: CommunityInfoProps) {
               theme: 'outline',
               className: 'mb-6 w-full'
             })}
-            href={`r/${slug}/submit`}
+            href={`r/${slug}/create`}
           >
             Create Post
           </Link>
