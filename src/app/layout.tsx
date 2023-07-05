@@ -3,7 +3,11 @@ import { cl } from '@/shared/lib';
 import './_styles/globals.css';
 import { Navbar } from '@/widgets/Navbar';
 import { Inter } from 'next/font/google';
-import { FetchProvider, ToasterProvider } from './_providers';
+import {
+  AuthSessionProvider,
+  FetchProvider,
+  ToasterProvider
+} from './_providers';
 import { ReactNode } from 'react';
 
 export const metadata = {
@@ -30,16 +34,18 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-slate-50 pt-12 antialiased">
         <FetchProvider>
-          {/* @ts-expect-error Server Component */}
-          <Navbar />
+          <AuthSessionProvider>
+            {/* @ts-expect-error Server Component */}
+            <Navbar />
 
-          <div className="container mx-auto h-full max-w-7xl pt-12">
-            {children}
-          </div>
-          <ToasterProvider />
+            <div className="container mx-auto h-full max-w-7xl pt-12">
+              {children}
+            </div>
+            <ToasterProvider />
 
-          {/* parallel routes */}
-          {authModal}
+            {/* parallel routes */}
+            {authModal}
+          </AuthSessionProvider>
         </FetchProvider>
       </body>
     </html>
