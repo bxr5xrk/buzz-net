@@ -4,7 +4,7 @@ import { Button } from '@/shared/ui/Button';
 import {
   useSubscribeCommunity,
   useUnsubscribeCommunity
-} from '../../model/service/subscribeService';
+} from '../../model/service/communityService';
 
 interface SubscribeLeaveToggleProps {
   isSubscribed: boolean;
