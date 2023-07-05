@@ -4,7 +4,7 @@
   "rules": {
     "prettier/prettier": "warn",
     "no-console": ["warn"],
-    "no-unused-vars": ["warn"],
+    "no-unused-vars": ["warn", { "args": "none" }],
     "jsx-quotes": ["error", "prefer-double"],
     "semi-spacing": ["warn", { "before": false, "after": true }],
     "quotes": ["warn", "single", { "avoidEscape": true }],

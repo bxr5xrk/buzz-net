@@ -20,6 +20,13 @@ export const useCommunity = (slug: string) =>
     }
   });
 
+export const useCommunityId = (slug: string) =>
+  db.community.findFirst({
+    where: {
+      name: slug
+    }
+  });
+
 export const useCommunityMemberCount = (slug: string) =>
   db.subscription.count({
     where: {

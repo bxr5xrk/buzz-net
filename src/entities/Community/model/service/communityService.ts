@@ -8,6 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { startTransition } from 'react';
+import { CommunityName } from '../types/community';
 
 export const useCreateCommunity = (communityName: string) => {
   const loginToast = useLoginToast();
@@ -62,7 +63,7 @@ export const useSubscribeCommunity = ({
   communityName
 }: {
   communityId: string;
-  communityName: string;
+  communityName: CommunityName;
 }) => {
   const loginToast = useLoginToast();
   const router = useRouter();
@@ -108,7 +109,7 @@ export const useUnsubscribeCommunity = ({
   communityName
 }: {
   communityId: string;
-  communityName: string;
+  communityName: CommunityName;
 }) => {
   const router = useRouter();
 

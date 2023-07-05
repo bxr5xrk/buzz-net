@@ -1,5 +1,5 @@
 import { useCommunity } from '@/entities/Community/model/service/dbService';
-import { CreatePost } from '@/entities/Post';
+import { CreatePostArea, PostFeed } from '@/entities/Post';
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { notFound } from 'next/navigation';
 
@@ -23,9 +23,9 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
       <h1 className="h-14 text-3xl font-bold md:text-4xl">
         r/{community.name}
       </h1>
-      <CreatePost session={session} />
+      <CreatePostArea session={session} />
 
-      {/* <PostFeed initialPosts={community.posts} communityName={community.name} /> */}
+      <PostFeed initialPosts={community.posts} communityName={community.name} />
     </>
   );
 }

@@ -7,11 +7,11 @@ import { Image as ImageIcon, Link2 } from 'lucide-react';
 import type { Session } from 'next-auth';
 import { usePathname, useRouter } from 'next/navigation';
 
-interface CreatePostProps {
+interface CreatePostAreaProps {
   session: Session | null;
 }
 
-export function CreatePost({ session }: CreatePostProps) {
+export function CreatePostArea({ session }: CreatePostAreaProps) {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -27,14 +27,14 @@ export function CreatePost({ session }: CreatePostProps) {
           <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-green-500 outline outline-2 outline-white" />
         </div>
         <Input
-          onClick={() => router.push(pathname + '/submit')}
+          onClick={() => router.push(pathname + '/create')}
           readOnly
           placeholder="Create post"
         />
-        <Button onClick={() => router.push(pathname + '/submit')} theme="ghost">
+        <Button onClick={() => router.push(pathname + '/create')} theme="ghost">
           <ImageIcon className="text-zinc-600" />
         </Button>
-        <Button onClick={() => router.push(pathname + '/submit')} theme="ghost">
+        <Button onClick={() => router.push(pathname + '/create')} theme="ghost">
           <Link2 className="text-zinc-600" />
         </Button>
       </div>

@@ -5,11 +5,12 @@ import {
   useSubscribeCommunity,
   useUnsubscribeCommunity
 } from '../../model/service/communityService';
+import { CommunityName } from '../../model/types/community';
 
 interface SubscribeLeaveToggleProps {
   isSubscribed: boolean;
   communityId: string;
-  communityName: string;
+  communityName: CommunityName;
 }
 
 export const SubscribeOrLeaveCommunity = ({
