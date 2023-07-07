@@ -1,3 +1,4 @@
+import { CommentsSection } from '@/entities/Comment';
 import { VoteSkeleton } from '@/entities/Vote';
 import { PostVoteServer } from '@/entities/Vote/ui/PostVote/PostVoteServer/PostVoteServer';
 import { formatTimeToNow } from '@/shared/lib/formatDate/formatDate';
@@ -36,8 +37,8 @@ export async function PostDetails({ postId }: { postId: string }) {
         <Suspense
           fallback={<Loader2 className="h-5 w-5 animate-spin text-zinc-500" />}
         >
-          {/* @1ts-expect-error Server Component */}
-          {/* <CommentsSection postId={post?.id ?? cachedPost.id} /> */}
+          {/* @ts-expect-error Server Component */}
+          <CommentsSection postId={post.id} />
         </Suspense>
       </div>
     </div>
