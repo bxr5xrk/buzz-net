@@ -1,11 +1,56 @@
+import {
+  AuthorUsername,
+  PostContent,
+  PostId,
+  PostTitle
+} from '@/entities/Post/model/types/post';
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { redis } from '@/shared/lib/config';
 import { db } from '@/shared/lib/db/db';
 import { PostVoteValidator } from '@/shared/validators/vote';
 import { CachedPost } from '@/types/redis';
+import { Vote, VoteType } from '@prisma/client';
 import { z } from 'zod';
 
-const CACHE_AFTER_UPVOTES = 1;
+const CACHE_AFTER_UPVOTES = 10;
+
+interface cachePostProps {
+  votes: Vote[];
+  username: AuthorUsername;
+  content: PostContent;
+  currentVote: VoteType | null;
+  createdAt: Date;
+  id: PostId;
+  title: PostTitle;
+}
+
+const cachePost = async ({
+  votes,
+  username,
+  content,
+  currentVote,
+  createdAt,
+  id,
+  title
+}: cachePostProps) => {
+  const votesAmount = votes.reduce(
+    (acc, vote) => (vote.type === 'UP' ? acc + 1 : acc - 1),
+    0
+  );
+
+  if (votesAmount >= CACHE_AFTER_UPVOTES) {
+    const cachePayload: CachedPost = {
+      authorUsername: username ?? '',
+      content: JSON.stringify(content),
+      id,
+      title,
+      currentVote,
+      createdAt
+    };
+
+    await redis.hset(`post:${id}`, cachePayload); // Store the post data as a hash
+  }
+};
 
 export async function PATCH(req: Request) {
   try {
@@ -54,24 +99,15 @@ export async function PATCH(req: Request) {
         });
 
         // Recount the votes
-        const votesAmt = post.votes.reduce((acc, vote) => {
-          if (vote.type === 'UP') return acc + 1;
-          if (vote.type === 'DOWN') return acc - 1;
-          return acc;
-        }, 0);
-
-        if (votesAmt >= CACHE_AFTER_UPVOTES) {
-          const cachePayload: CachedPost = {
-            authorUsername: post.author.username ?? '',
-            content: JSON.stringify(post.content),
-            id: post.id,
-            title: post.title,
-            currentVote: null,
-            createdAt: post.createdAt
-          };
-
-          await redis.hset(`post:${postId}`, cachePayload); // Store the post data as a hash
-        }
+        await cachePost({
+          votes: post.votes,
+          username: post.author.username ?? '',
+          content: post.content,
+          id: post.id,
+          title: post.title,
+          currentVote: null,
+          createdAt: post.createdAt
+        });
 
         return new Response('OK');
       }
@@ -90,24 +126,15 @@ export async function PATCH(req: Request) {
       });
 
       // Recount the votes
-      const votesAmt = post.votes.reduce((acc, vote) => {
-        if (vote.type === 'UP') return acc + 1;
-        if (vote.type === 'DOWN') return acc - 1;
-        return acc;
-      }, 0);
-
-      if (votesAmt >= CACHE_AFTER_UPVOTES) {
-        const cachePayload: CachedPost = {
-          authorUsername: post.author.username ?? '',
-          content: JSON.stringify(post.content),
-          id: post.id,
-          title: post.title,
-          currentVote: voteType,
-          createdAt: post.createdAt
-        };
-
-        await redis.hset(`post:${postId}`, cachePayload); // Store the post data as a hash
-      }
+      await cachePost({
+        votes: post.votes,
+        username: post.author.username ?? '',
+        content: post.content,
+        id: post.id,
+        title: post.title,
+        currentVote: voteType,
+        createdAt: post.createdAt
+      });
 
       return new Response('OK');
     }
@@ -122,28 +149,18 @@ export async function PATCH(req: Request) {
     });
 
     // Recount the votes
-    const votesAmt = post.votes.reduce((acc, vote) => {
-      if (vote.type === 'UP') return acc + 1;
-      if (vote.type === 'DOWN') return acc - 1;
-      return acc;
-    }, 0);
-
-    if (votesAmt >= CACHE_AFTER_UPVOTES) {
-      const cachePayload: CachedPost = {
-        authorUsername: post.author.username ?? '',
-        content: JSON.stringify(post.content),
-        id: post.id,
-        title: post.title,
-        currentVote: voteType,
-        createdAt: post.createdAt
-      };
-
-      await redis.hset(`post:${postId}`, cachePayload); // Store the post data as a hash
-    }
+    await cachePost({
+      votes: post.votes,
+      username: post.author.username ?? '',
+      content: post.content,
+      id: post.id,
+      title: post.title,
+      currentVote: voteType,
+      createdAt: post.createdAt
+    });
 
     return new Response('OK');
   } catch (error) {
-    error;
     if (error instanceof z.ZodError) {
       return new Response(error.message, { status: 400 });
     }

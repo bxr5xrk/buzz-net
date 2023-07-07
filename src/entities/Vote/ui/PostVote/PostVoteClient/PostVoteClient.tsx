@@ -24,12 +24,12 @@ export function PostVoteClient({
   const [currentVote, setCurrentVote] = useState(initialVote);
   const prevVote = usePrevious(currentVote);
 
-  // ensure sync with server
+  // sync with server
   useEffect(() => {
     setCurrentVote(initialVote);
   }, [initialVote]);
 
-  const { mutate: onVote } = useVote({
+  const { mutate: onVote, isLoading } = useVote({
     postId,
     onErrorHandler: (voteType) => {
       if (voteType === 'UP') setVotesAmt((prev) => prev - 1);
@@ -41,6 +41,7 @@ export function PostVoteClient({
       if (currentVote === type) {
         // User is voting the same way again, so remove their vote
         setCurrentVote(undefined);
+
         if (type === 'UP') setVotesAmt((prev) => prev - 1);
         else if (type === 'DOWN') setVotesAmt((prev) => prev + 1);
       } else {
@@ -57,6 +58,7 @@ export function PostVoteClient({
     <div className="flex flex-col gap-4 pb-4 pr-6 sm:w-20 sm:gap-0 sm:pb-0">
       {/* upvote */}
       <Button
+        disabled={isLoading}
         onClick={() => onVote('UP')}
         size="sm"
         theme="ghost"
@@ -76,6 +78,7 @@ export function PostVoteClient({
 
       {/* downvote */}
       <Button
+        disabled={isLoading}
         onClick={() => onVote('DOWN')}
         size="sm"
         className={cl({
