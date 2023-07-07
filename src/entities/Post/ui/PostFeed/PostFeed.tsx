@@ -1,13 +1,11 @@
 'use client';
 
 import { CommunityName } from '@/entities/Community/model/types/community';
-import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/shared/const';
 import { useIntersection } from '@/shared/lib/hooks';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useRef } from 'react';
+import { useInfinitePosts } from '../../model/service/postService';
 import { CommunityPost } from '../../model/types/post';
 import { Post } from '../Post/Post';
 
@@ -26,26 +24,10 @@ export function PostFeed({ communityName, initialPosts }: PostFeedProps) {
     threshold: 1
   });
 
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery<
-    CommunityPost[]
-  >(
-    ['infinite-query'],
-    async ({ pageParam = 1 }) => {
-      const query =
-        `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}` +
-        (!!communityName ? `&communityName=${communityName}` : '');
-
-      const { data } = await axios.get(query);
-      return data;
-    },
-
-    {
-      getNextPageParam: (_, pages) => {
-        return pages.length + 1;
-      },
-      initialData: { pages: [initialPosts], pageParams: [1] }
-    }
-  );
+  const { data, fetchNextPage, isFetchingNextPage } = useInfinitePosts({
+    communityName,
+    initialPosts
+  });
 
   useEffect(() => {
     if (entry?.isIntersecting) {

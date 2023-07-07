@@ -1,8 +1,11 @@
+import { CommunityName } from '@/entities/Community/model/types/community';
+import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/shared/const';
 import { toast } from '@/shared/lib/hooks/useToast';
-import { PostCreationRequest } from '@/shared/validators/post';
-import { useMutation } from '@tanstack/react-query';
+import { PostCreationRequest } from '@/shared/lib/validators/post';
+import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { usePathname, useRouter } from 'next/navigation';
+import { CommunityPost } from '../types/post';
 
 export const useCreatePost = () => {
   const pathname = usePathname();
@@ -37,4 +40,30 @@ export const useCreatePost = () => {
       });
     }
   });
+};
+
+export const useInfinitePosts = ({
+  initialPosts,
+  communityName
+}: {
+  initialPosts: CommunityPost[];
+  communityName?: CommunityName;
+}) => {
+  return useInfiniteQuery<CommunityPost[]>(
+    ['infinite-query'],
+    async ({ pageParam = 1 }) => {
+      const query =
+        `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}` +
+        (!!communityName ? `&communityName=${communityName}` : '');
+
+      const { data } = await axios.get(query);
+      return data;
+    },
+    {
+      getNextPageParam: (_, pages) => {
+        return pages.length + 1;
+      },
+      initialData: { pages: [initialPosts], pageParams: [1] }
+    }
+  );
 };

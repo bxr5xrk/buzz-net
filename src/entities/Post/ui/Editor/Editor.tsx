@@ -2,7 +2,10 @@
 
 import TextareaAutoSize from 'react-textarea-autosize';
 import { useForm } from 'react-hook-form';
-import { PostCreationRequest, PostValidator } from '@/shared/validators/post';
+import {
+  PostCreationRequest,
+  PostValidator
+} from '@/shared/lib/validators/post';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useCallback, useEffect, useRef, useState } from 'react';

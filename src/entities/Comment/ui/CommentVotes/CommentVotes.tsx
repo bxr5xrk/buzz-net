@@ -1,52 +1,46 @@
-'use client';
-
-import { PostId } from '@/entities/Post/model/types/post';
-import { useVote } from '@/entities/Vote/model/service/voteService';
 import { cl } from '@/shared/lib';
 import { usePrevious } from '@/shared/lib/hooks/usePrevious';
 import { Button } from '@/shared/ui/Button';
-import { VoteType } from '@prisma/client';
+import { CommentVote } from '@prisma/client';
 import { ArrowBigDown, ArrowBigUp } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useVoteComment } from '../../model/service/commentService';
 
-interface PostVoteClientProps {
-  postId: PostId;
-  initialVotesAmount: number;
-  initialVote?: VoteType;
+interface CommentVotesProps {
+  commentId: string;
+  votesAmount: number;
+  currentVote?: Pick<CommentVote, 'type'>;
 }
 
-export function PostVoteClient({
-  postId,
-  initialVote,
-  initialVotesAmount
-}: PostVoteClientProps) {
-  const [votesAmt, setVotesAmt] = useState(initialVotesAmount);
-  const [currentVote, setCurrentVote] = useState(initialVote);
+export function CommentVotes({
+  currentVote: _currentVote,
+  votesAmount: _votesAmount,
+  commentId
+}: CommentVotesProps) {
+  const [votesAmt, setVotesAmt] = useState(_votesAmount);
+  const [currentVote, setCurrentVote] = useState<
+    Pick<CommentVote, 'type'> | undefined
+  >(_currentVote);
   const prevVote = usePrevious(currentVote);
 
-  // sync with server
-  useEffect(() => {
-    setCurrentVote(initialVote);
-  }, [initialVote]);
-
-  const { mutate: onVote, isLoading } = useVote({
-    postId,
-    onErrorHandler: (voteType) => {
+  const { mutate: onVote } = useVoteComment({
+    commentId,
+    onErrorHandler(voteType) {
       if (voteType === 'UP') setVotesAmt((prev) => prev - 1);
       else setVotesAmt((prev) => prev + 1);
+
       // reset current vote
       setCurrentVote(prevVote);
     },
     onMutateHandler(type) {
-      if (currentVote === type) {
+      if (currentVote?.type === type) {
         // User is voting the same way again, so remove their vote
         setCurrentVote(undefined);
-
         if (type === 'UP') setVotesAmt((prev) => prev - 1);
         else if (type === 'DOWN') setVotesAmt((prev) => prev + 1);
       } else {
         // User is voting in the opposite direction, so subtract 2
-        setCurrentVote(type);
+        setCurrentVote({ type });
         if (type === 'UP') setVotesAmt((prev) => prev + (currentVote ? 2 : 1));
         else if (type === 'DOWN')
           setVotesAmt((prev) => prev - (currentVote ? 2 : 1));
@@ -55,41 +49,39 @@ export function PostVoteClient({
   });
 
   return (
-    <div className="flex flex-col gap-4 pb-4 pr-6 sm:w-20 sm:gap-0 sm:pb-0">
+    <div className="flex gap-1">
       {/* upvote */}
       <Button
-        disabled={isLoading}
         onClick={() => onVote('UP')}
-        size="sm"
+        size="xs"
         theme="ghost"
         aria-label="upvote"
       >
         <ArrowBigUp
           className={cl('h-5 w-5', {
-            'fill-emerald-500 text-emerald-500': currentVote === 'UP'
+            'fill-emerald-500 text-emerald-500': currentVote?.type === 'UP'
           })}
         />
       </Button>
 
       {/* score */}
-      <p className="py-2 text-center text-sm font-medium text-zinc-900">
+      <p className="px-1 py-2 text-center text-xs font-medium text-zinc-900">
         {votesAmt}
       </p>
 
       {/* downvote */}
       <Button
-        disabled={isLoading}
         onClick={() => onVote('DOWN')}
-        size="sm"
+        size="xs"
         className={cl({
-          'text-emerald-500': currentVote === 'DOWN'
+          'text-emerald-500': currentVote?.type === 'DOWN'
         })}
         theme="ghost"
         aria-label="downvote"
       >
         <ArrowBigDown
           className={cl('h-5 w-5', {
-            'fill-red-500 text-red-500': currentVote === 'DOWN'
+            'fill-red-500 text-red-500': currentVote?.type === 'DOWN'
           })}
         />
       </Button>

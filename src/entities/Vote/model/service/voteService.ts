@@ -1,7 +1,7 @@
 import { PostId } from '@/entities/Post/model/types/post';
 import { useLoginToast } from '@/shared/lib/hooks';
 import { toast } from '@/shared/lib/hooks/useToast';
-import { PostVoteRequest } from '@/shared/validators/vote';
+import { PostVoteRequest } from '@/shared/lib/validators/vote';
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { VoteType } from '../types/vote';
