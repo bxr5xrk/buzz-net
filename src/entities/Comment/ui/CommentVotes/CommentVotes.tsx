@@ -58,7 +58,7 @@ export function CommentVotes({
         aria-label="upvote"
       >
         <ArrowBigUp
-          className={cl('h-5 w-5 text-zinc-700', {
+          className={cl('h-5 w-5', {
             'fill-emerald-500 text-emerald-500': currentVote?.type === 'UP'
           })}
         />
@@ -80,7 +80,7 @@ export function CommentVotes({
         aria-label="downvote"
       >
         <ArrowBigDown
-          className={cl('h-5 w-5 text-zinc-700', {
+          className={cl('h-5 w-5', {
             'fill-red-500 text-red-500': currentVote?.type === 'DOWN'
           })}
         />

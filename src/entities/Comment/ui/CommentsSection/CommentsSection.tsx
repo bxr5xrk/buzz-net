@@ -1,5 +1,4 @@
 import { PostId } from '@/entities/Post/model/types/post';
-
 import { commentsTree } from '../../model/lib/commentsTree';
 import { useComments } from '../../model/service/dbService';
 import { CommentsList } from '../CommentsList/CommentsList';
@@ -20,7 +19,7 @@ export async function CommentsSection({ postId }: CommentsSectionProps) {
 
       <CreateComment postId={postId} />
 
-      <div className="mt-4 flex flex-col gap-y-6">
+      <div className="mt-4 flex flex-col gap-y-3">
         {/* @ts-expect-error Server Component */}
         <CommentsList comments={tree} />
       </div>
