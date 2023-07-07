@@ -11,5 +11,3 @@ export type PostTitle = Pick<Post, 'title'>['title'];
 export type PostId = Pick<Post, 'id'>['id'];
 export type PostCreatedAt = Pick<Post, 'createdAt'>['createdAt'];
 export type PostContent = Pick<Post, 'content'>['content'];
-
-export type AuthorUsername = Pick<User, 'username'>['username'];

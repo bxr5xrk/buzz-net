@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { db } from '@/shared/lib/db/db';
-import { PostValidator } from '@/shared/validators/post';
+import { PostValidator } from '@/shared/lib/validators/post';
 import { z } from 'zod';
 
 export async function POST(req: Request) {

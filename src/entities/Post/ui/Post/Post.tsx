@@ -1,3 +1,4 @@
+import { AuthorUsername } from '@/entities/Author/model/types/author';
 import { CommunityName } from '@/entities/Community/model/types/community';
 import { PostVoteClient } from '@/entities/Vote';
 import { VoteType } from '@/entities/Vote/model/types/vote';
@@ -6,7 +7,6 @@ import { MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
 import {
-  AuthorUsername,
   PostContent,
   PostCreatedAt,
   PostId,

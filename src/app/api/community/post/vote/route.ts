@@ -1,5 +1,5 @@
+import { AuthorUsername } from '@/entities/Author/model/types/author';
 import {
-  AuthorUsername,
   PostContent,
   PostId,
   PostTitle
@@ -7,7 +7,7 @@ import {
 import { getAuthSession } from '@/shared/lib/auth/auth';
 import { redis } from '@/shared/lib/config';
 import { db } from '@/shared/lib/db/db';
-import { PostVoteValidator } from '@/shared/validators/vote';
+import { PostVoteValidator } from '@/shared/lib/validators/vote';
 import { CachedPost } from '@/types/redis';
 import { Vote, VoteType } from '@prisma/client';
 import { z } from 'zod';
