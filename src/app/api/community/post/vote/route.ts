@@ -12,7 +12,7 @@ import { CachedPost } from '@/types/redis';
 import { Vote, VoteType } from '@prisma/client';
 import { z } from 'zod';
 
-const CACHE_AFTER_UPVOTES = 10;
+const CACHE_AFTER_UPVOTES = 1;
 
 interface cachePostProps {
   votes: Vote[];
