@@ -19,6 +19,7 @@ export function CreateComment({ postId, replyToId }: CreateCommentProps) {
   const { mutate: onCreate, isLoading } = useCreateComment({
     onSuccessHandler: () => {
       router.refresh();
+      setInput('');
     }
   });
 

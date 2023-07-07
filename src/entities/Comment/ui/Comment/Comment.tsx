@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useCreateComment } from '../../model/service/commentService';
 import { ExtendedComment } from '../../model/types/comment';
+import { CommentVotes } from '../CommentVotes/CommentVotes';
 
 interface CommentProps {
   comment: ExtendedComment;
@@ -65,11 +66,11 @@ export function Comment({
       <p className="mt-2 text-sm text-zinc-900">{comment.text}</p>
 
       <div className="flex items-center gap-2">
-        {/* <CommentVotes
+        <CommentVotes
           commentId={comment.id}
-          votesAmt={votesAmt}
+          votesAmount={votesAmt}
           currentVote={currentVote}
-        /> */}
+        />
 
         <Button
           onClick={() => {
