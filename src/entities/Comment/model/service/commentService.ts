@@ -53,7 +53,7 @@ export const useVoteComment = ({
         commentId
       };
 
-      await axios.patch('/api/subreddit/post/comment/vote', payload);
+      await axios.patch('/api/community/post/comment/vote', payload);
     },
     onError: (err, voteType) => {
       onErrorHandler(voteType);
