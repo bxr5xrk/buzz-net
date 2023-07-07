@@ -1,21 +1,17 @@
 import { db } from '@/shared/lib/db/db';
 
-export const useComments = async (postId: string) => {
+export const useComments = async (
+  postId: string,
+  replyToId?: string | null
+) => {
   const comments = await db.comment.findMany({
     where: {
-      postId: postId,
-      replyToId: null // only fetch top-level comments
+      postId: postId
+      // replyToId
     },
     include: {
       author: true,
-      votes: true,
-      replies: {
-        // first level replies
-        include: {
-          author: true,
-          votes: true
-        }
-      }
+      votes: true
     }
   });
 

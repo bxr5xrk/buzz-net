@@ -33,6 +33,7 @@ export function Comment({
   const commentRef = useRef<HTMLDivElement>(null);
   const [input, setInput] = useState(`@${comment.author.username} `);
   const router = useRouter();
+
   useOnClickOutside(commentRef, () => {
     setIsReplying(false);
   });
@@ -115,11 +116,11 @@ export function Comment({
               <Button
                 isLoading={isLoading}
                 onClick={() => {
-                  if (!input) return;
+                  if (!input.trim()) return;
                   onCrete({
                     postId,
                     text: input,
-                    replyToId: comment.replyToId ?? comment.id // default to top-level comment
+                    replyToId: comment.id
                   });
                 }}
               >
