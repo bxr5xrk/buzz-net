@@ -4,3 +4,5 @@ export interface ExtendedComment extends Comment {
   votes: CommentVote[];
   author: User;
 }
+
+export type CommentId = Pick<Comment, 'id'>['id'];

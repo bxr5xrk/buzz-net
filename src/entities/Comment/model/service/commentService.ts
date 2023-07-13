@@ -3,8 +3,9 @@ import { toast } from '@/shared/lib/hooks/useToast';
 import { CommentRequest } from '@/shared/lib/validators/comment';
 import { CommentVoteRequest } from '@/shared/lib/validators/vote';
 import { VoteType } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
+import { ExtendedComment } from '../types/comment';
 
 export const useCreateComment = ({
   onSuccessHandler
@@ -75,3 +76,22 @@ export const useVoteComment = ({
     }
   });
 };
+
+interface Comment extends ExtendedComment {
+  _count: {
+    replies: number;
+  };
+}
+
+export const useComments = (postId: string, replyToId: null | string) =>
+  useQuery<{ data: Comment[] }, unknown, Comment[]>({
+    queryKey: ['post-comments', postId, replyToId],
+    queryFn: () =>
+      axios.get('/api/community/post/comments', {
+        params: {
+          post_id: postId,
+          reply_to_id: replyToId
+        }
+      }),
+    select: (res) => res.data
+  });

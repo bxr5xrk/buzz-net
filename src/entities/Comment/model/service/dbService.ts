@@ -1,17 +1,28 @@
+// import { db } from '@/shared/lib/db/db';
+
 import { db } from '@/shared/lib/db/db';
 
-export const useComments = async (
+// import { Comment } from '@prisma/client';
+// import { useQuery } from '@tanstack/react-query';
+// import axios from 'axios';
+
+export const useCommentsServer = async (
   postId: string,
   replyToId?: string | null
 ) => {
   const comments = await db.comment.findMany({
     where: {
-      postId: postId
-      // replyToId
+      postId,
+      replyToId
     },
     include: {
       author: true,
-      votes: true
+      votes: true,
+      _count: {
+        select: {
+          replies: true
+        }
+      }
     }
   });
 
