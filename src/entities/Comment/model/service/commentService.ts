@@ -77,14 +77,8 @@ export const useVoteComment = ({
   });
 };
 
-interface Comment extends ExtendedComment {
-  _count: {
-    replies: number;
-  };
-}
-
 export const useComments = (postId: string, replyToId: null | string) =>
-  useQuery<{ data: Comment[] }, unknown, Comment[]>({
+  useQuery<{ data: ExtendedComment[] }, unknown, ExtendedComment[]>({
     queryKey: ['post-comments', postId, replyToId],
     queryFn: () =>
       axios.get('/api/community/post/comments', {
