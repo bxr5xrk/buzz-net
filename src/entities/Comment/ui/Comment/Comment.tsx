@@ -4,45 +4,46 @@ import { UserAvatar } from '@/features/UserAvatar';
 import { formatTimeToNow } from '@/shared/lib/formatDate/formatDate';
 import { useOnClickOutside } from '@/shared/lib/hooks';
 import { Button } from '@/shared/ui/Button';
-import { Label } from '@/shared/ui/Label';
-import { Textarea } from '@/shared/ui/Textarea';
 import { CommentVote } from '@prisma/client';
-import { MessageSquare } from 'lucide-react';
+import { ChevronDown, ChevronUp, MessageSquare } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { useCreateComment } from '../../model/service/commentService';
 import { ExtendedComment } from '../../model/types/comment';
+import { CommentsList } from '../CommentsList/CommentsList';
 import { CommentVotes } from '../CommentVotes/CommentVotes';
+import { ReplyArea } from '../ReplyArea/ReplyArea';
+
+const singularOrPluralMessage = (
+  count: number,
+  singular: string,
+  plural: string
+) => (count === 1 ? count + ' ' + singular : count + ' ' + plural);
 
 interface CommentProps {
   comment: ExtendedComment;
   votesAmt: number;
   currentVote: CommentVote | undefined;
   postId: string;
+  repliesCount: number;
 }
 
 export function Comment({
   comment,
   votesAmt,
   currentVote,
-  postId
+  postId,
+  repliesCount
 }: CommentProps) {
   const { data: session } = useSession();
-  const [isReplying, setIsReplying] = useState(false);
-  const commentRef = useRef<HTMLDivElement>(null);
-  const [input, setInput] = useState(`@${comment.author.username} `);
   const router = useRouter();
+  const commentRef = useRef<HTMLDivElement>(null);
+
+  const [isReplying, setIsReplying] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
 
   useOnClickOutside(commentRef, () => {
     setIsReplying(false);
-  });
-
-  const { mutate: onCrete, isLoading } = useCreateComment({
-    onSuccessHandler: () => {
-      router.refresh();
-      setIsReplying(false);
-    }
   });
 
   return (
@@ -84,54 +85,37 @@ export function Comment({
           <MessageSquare className="mr-1.5 h-4 w-4" />
           Reply
         </Button>
+
+        {repliesCount ? (
+          <Button
+            onClick={() => setShowReplies((prev) => !prev)}
+            theme="subtle"
+            size="xs"
+            className="flex gap-2 rounded-3xl border px-2"
+          >
+            {showReplies ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+            {singularOrPluralMessage(repliesCount, 'reply', 'replies')}
+          </Button>
+        ) : null}
       </div>
 
-      {isReplying ? (
-        <div className="grid w-full gap-1.5">
-          <Label htmlFor="comment">Your comment</Label>
-          <div className="mt-2">
-            <Textarea
-              onFocus={(e) =>
-                e.currentTarget.setSelectionRange(
-                  e.currentTarget.value.length,
-                  e.currentTarget.value.length
-                )
-              }
-              autoFocus
-              id="comment"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              rows={1}
-              placeholder="What are your thoughts?"
-            />
+      <ReplyArea
+        commentId={comment.id}
+        postId={postId}
+        username={comment.author.username ?? ''}
+        isReplying={isReplying}
+        setIsReplying={setIsReplying}
+      />
 
-            <div className="mt-2 flex justify-end gap-2">
-              <Button
-                tabIndex={-1}
-                theme="subtle"
-                onClick={() => setIsReplying(false)}
-              >
-                Cancel
-              </Button>
-              <Button
-                isLoading={isLoading}
-                onClick={() => {
-                  if (!input.trim()) return;
-                  onCrete({
-                    postId,
-                    text: input,
-                    replyToId: comment.id
-                  });
-                }}
-              >
-                Post
-              </Button>
-            </div>
-          </div>
+      {showReplies ? (
+        <div className="ml-3 border-l-2 border-zinc-200 py-2 pl-4">
+          <CommentsList replyToId={comment.id} postId={postId} />
         </div>
       ) : null}
     </div>
   );
 }
-
-export default Comment;

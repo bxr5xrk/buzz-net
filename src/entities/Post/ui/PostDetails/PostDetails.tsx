@@ -37,7 +37,6 @@ export async function PostDetails({ postId }: { postId: string }) {
         <Suspense
           fallback={<Loader2 className="h-5 w-5 animate-spin text-zinc-500" />}
         >
-          {/* @ts-expect-error Server Component */}
           <CommentsSection postId={post.id} />
         </Suspense>
       </div>

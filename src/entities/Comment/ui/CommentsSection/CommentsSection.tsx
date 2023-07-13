@@ -1,6 +1,6 @@
+'use client';
+
 import { PostId } from '@/entities/Post/model/types/post';
-import { commentsTree } from '../../model/lib/commentsTree';
-import { useComments } from '../../model/service/dbService';
 import { CommentsList } from '../CommentsList/CommentsList';
 import { CreateComment } from '../CreateComment/CreateComment';
 
@@ -8,11 +8,7 @@ interface CommentsSectionProps {
   postId: PostId;
 }
 
-export async function CommentsSection({ postId }: CommentsSectionProps) {
-  const { comments } = await useComments(postId);
-
-  const { tree } = commentsTree(comments);
-
+export function CommentsSection({ postId }: CommentsSectionProps) {
   return (
     <div className="mt-4 flex flex-col gap-y-4">
       <hr className="my-6 h-px w-full" />
@@ -20,8 +16,7 @@ export async function CommentsSection({ postId }: CommentsSectionProps) {
       <CreateComment postId={postId} />
 
       <div className="mt-4 flex flex-col gap-y-3">
-        {/* @ts-expect-error Server Component */}
-        <CommentsList comments={tree} />
+        <CommentsList postId={postId} replyToId={null} />
       </div>
     </div>
   );
