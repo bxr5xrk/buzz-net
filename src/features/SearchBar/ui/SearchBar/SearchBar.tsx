@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Users } from 'lucide-react';
 import { useDebounce, useOnClickOutside } from '@/shared/lib/hooks';
 import {
@@ -13,36 +13,26 @@ import {
   CommandList
 } from '@/shared/ui/Command';
 import { useSearch } from '../../model/service/searchService';
+import Link from 'next/link';
 
 export function SearchBar() {
-  const [input, setInput] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const pathname = usePathname();
   const commandRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useOnClickOutside(commandRef, () => {
-    setInput('');
+    if (searchQuery.length) setSearchQuery('');
   });
 
-  const request = useDebounce(async () => {
+  const onChange = useDebounce(() => {
     refetch();
-  }, 300);
+  }, 400);
 
-  const debounceRequest = useCallback(() => {
-    request();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const {
-    isFetching,
-    data: queryResults,
-    refetch,
-    isFetched
-  } = useSearch(input);
+  const { isFetching, data, refetch, isFetched } = useSearch(searchQuery);
 
   useEffect(() => {
-    setInput('');
+    setSearchQuery('');
   }, [pathname]);
 
   return (
@@ -53,20 +43,23 @@ export function SearchBar() {
       <CommandInput
         isLoading={isFetching}
         onValueChange={(text) => {
-          setInput(text);
-          debounceRequest();
+          setSearchQuery(text);
+          onChange();
         }}
-        value={input}
+        value={searchQuery}
         className="border-none outline-none ring-0 focus:border-none focus:outline-none"
         placeholder="Search communities..."
       />
 
-      {input.length > 0 && (
+      {searchQuery.trim().length > 0 && (
         <CommandList className="absolute inset-x-0 top-full rounded-b-md bg-white shadow">
-          {isFetched && <CommandEmpty>No results found.</CommandEmpty>}
-          {(queryResults?.length ?? 0) > 0 ? (
+          {isFetched && !data?.length ? (
+            <CommandEmpty>No results found.</CommandEmpty>
+          ) : null}
+
+          {data?.length ? (
             <CommandGroup heading="Communities">
-              {queryResults?.map((community) => (
+              {data?.map((community) => (
                 <CommandItem
                   onSelect={(e) => {
                     router.push(`/r/${e}`);
@@ -76,7 +69,12 @@ export function SearchBar() {
                   value={community.name}
                 >
                   <Users className="mr-2 h-4 w-4" />
-                  <a href={`/r/${community.name}`}>r/{community.name}</a>
+                  <Link
+                    className="cursor-pointer"
+                    href={`/r/${community.name}`}
+                  >
+                    r/{community.name}
+                  </Link>
                 </CommandItem>
               ))}
             </CommandGroup>

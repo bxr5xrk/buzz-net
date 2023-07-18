@@ -4,12 +4,12 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const q = url.searchParams.get('q');
 
-  if (!q) return new Response('Invalid query', { status: 400 });
+  if (!q) return new Response(JSON.stringify([]));
 
   const results = await db.community.findMany({
     where: {
       name: {
-        startsWith: q
+        contains: q
       }
     },
     include: {

@@ -10,7 +10,7 @@ export const Navbar = async () => {
         {/* logo */}
         <Link href="/" className="flex items-center gap-2">
           <Icons.logo className="h-8 w-8 sm:h-6 sm:w-6" />
-          <p className="hidden text-sm font-medium text-zinc-700 md:block">
+          <p className="hidden text-lg font-medium text-zinc-700 md:block">
             Buzz Net
           </p>
         </Link>
