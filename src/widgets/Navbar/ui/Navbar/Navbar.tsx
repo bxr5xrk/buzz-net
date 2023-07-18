@@ -1,7 +1,7 @@
+import { SearchBar } from '@/features/SearchBar';
 import { Icons } from '@/shared';
 import Link from 'next/link';
 import { Action } from '../Action/Action';
-// import SearchBar from './SearchBar';
 
 export const Navbar = async () => {
   return (
@@ -16,7 +16,7 @@ export const Navbar = async () => {
         </Link>
 
         {/* search bar */}
-        {/* <SearchBar /> */}
+        <SearchBar />
 
         {/* @ts-expect-error Server Component */}
         <Action />
