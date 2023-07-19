@@ -1,6 +1,6 @@
 'use client';
 
-import { UserAvatar } from '@/features/UserAvatar';
+import { UserAvatar } from '@/shared/ui/UserAvatar';
 import { Button } from '@/shared/ui/Button';
 import { Input } from '@/shared/ui/Input';
 import { Image as ImageIcon, Link2 } from 'lucide-react';

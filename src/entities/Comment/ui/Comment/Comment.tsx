@@ -1,6 +1,6 @@
 'use client';
 
-import { UserAvatar } from '@/features/UserAvatar';
+import { UserAvatar } from '@/shared/ui/UserAvatar';
 import { formatTimeToNow } from '@/shared/lib/formatDate/formatDate';
 import { useOnClickOutside } from '@/shared/lib/hooks';
 import { Button } from '@/shared/ui/Button';
