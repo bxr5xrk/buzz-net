@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/shared/ui/Dropdown';
-import { UserAvatar } from '@/features/UserAvatar';
+import { UserAvatar } from '@/shared/ui/UserAvatar';
 
 interface UserAccountProps extends React.HTMLAttributes<HTMLDivElement> {
   user: Pick<User, 'name' | 'image' | 'email'>;

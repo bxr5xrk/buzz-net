@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback } from '@/shared/ui/Avatar';
 import { User } from '@prisma/client';
 import { AvatarProps } from '@radix-ui/react-avatar';
 import Image from 'next/image';
-import { Icons } from '../../../shared/ui/Icons/Icons';
+import { Icons } from '../../Icons/Icons';
 
 interface UserAvatarProps extends AvatarProps {
   image?: Pick<User, 'image'>['image'];
