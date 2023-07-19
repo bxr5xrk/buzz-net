@@ -29,7 +29,6 @@ export const useCreatePost = () => {
       });
     },
     onSuccess: () => {
-      // turn pathname /r/mycommunity/create into /r/mycommunity
       const newPathname = pathname.split('/').slice(0, -1).join('/');
       router.push(newPathname);
 

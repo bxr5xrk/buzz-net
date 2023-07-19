@@ -6,6 +6,9 @@ import {
   getPostsFromFollowedCommunities
 } from '../../model/service/dbService';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+
 export const PersonalizedFeed = async () => {
   const session = await getAuthSession();
 
