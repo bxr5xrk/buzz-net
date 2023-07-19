@@ -50,7 +50,7 @@ export const useInfinitePosts = ({
   communityName?: CommunityName;
 }) => {
   return useInfiniteQuery<CommunityPost[]>(
-    ['infinite-query', communityName],
+    ['infinite-posts', communityName || 'root'],
     async ({ pageParam = 1 }) => {
       const query =
         `/api/posts?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}` +
